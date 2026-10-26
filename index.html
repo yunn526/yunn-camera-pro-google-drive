@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#102a56">
+<title>Yunn Camera PRO｜專業相機</title>
+<style>
+:root{--bg:#eef2f8;--paper:#ffffff;--ink:#172338;--muted:#657187;--line:#d9e1ee;--green:#4f75ad;--deep:#294b7d;--orange:#e9a36d;--button:#4f75ad;--buttonText:#ffffff;--card:#ffffff;--soft:#e8eef7}
+body.dark{--bg:#0a1220;--paper:#111d30;--ink:#edf3ff;--muted:#a7b5cc;--line:#293a54;--green:#4c78bd;--deep:#081a35;--button:#547db8;--buttonText:#ffffff;--card:#16243a;--soft:#1d304b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Noto Sans TC",sans-serif}
+button,select,input{font:inherit}button{cursor:pointer;border:0}
+.app{max-width:460px;min-height:100dvh;margin:0 auto;background:var(--paper);box-shadow:0 0 40px #24261b0d;position:relative;padding-bottom:88px;transition:background .2s,color .2s}
+.topbar{padding:20px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{font-size:13px;font-weight:900;letter-spacing:2px}.status{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}.dot{width:7px;height:7px;border-radius:50%;background:#a6c85b}
+.page{display:none;padding:22px}.page.active{display:block}.eyebrow{font-size:11px;letter-spacing:2px;color:#7c8760;font-weight:800;text-transform:uppercase}
+h1{font-size:31px;line-height:1.2;margin:8px 0 10px;letter-spacing:-1px}h2{font-size:21px;margin:0 0 6px}p{line-height:1.7;color:var(--muted);font-size:14px;margin:0 0 18px}
+.hero{background:var(--deep);color:white;border-radius:25px;padding:22px;overflow:hidden;position:relative;min-height:245px;margin:22px 0 18px}
+.hero:after{content:"";position:absolute;width:180px;height:180px;border:1px solid #ffffff26;border-radius:50%;right:-42px;top:20px;box-shadow:0 0 0 18px #ffffff09,0 0 0 38px #ffffff06}
+.camera-art{height:125px;width:190px;background:#d9d9ca;border-radius:19px;position:relative;margin:12px auto 8px;transform:rotate(-5deg);box-shadow:0 14px 25px #0003}
+.camera-art:before{content:"";position:absolute;width:72px;height:72px;border-radius:50%;background:#343a31;border:7px solid #9ea397;left:58px;top:18px;box-shadow:inset 0 0 0 8px #20251e,inset 0 0 0 14px #58624f}
+.camera-art:after{content:"";position:absolute;width:22px;height:9px;background:#777d70;border-radius:4px;left:17px;top:18px}
+.camera-label{font-size:10px;color:#40453b;position:absolute;right:13px;bottom:12px;font-weight:900;letter-spacing:1px}
+.hero .eyebrow{color:var(--green)}.hero h2{font-size:19px;position:relative;z-index:1}.hero p{color:#d0d3c9;font-size:12px;margin:5px 0 0;position:relative;z-index:1}
+.primary{background:var(--button);color:var(--buttonText);padding:15px 18px;border-radius:15px;font-weight:850;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s}
+.primary:active,.secondary:active,.navbtn:active{transform:scale(.98)}
+.secondary{background:var(--button);color:var(--buttonText);padding:12px 14px;border-radius:13px;font-weight:750}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 0 12px}.small{font-size:11px;color:var(--muted)}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.feature{border:1px solid var(--line);border-radius:17px;padding:15px}.feature .emoji{font-size:22px}.feature b{display:block;font-size:13px;margin:9px 0 4px}.feature span{font-size:11px;color:var(--muted);line-height:1.5}
+.camera-window{height:300px;border-radius:22px;background:#20251f;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;color:#d5d8cd;margin:18px 0 14px}
+#video,#canvasPreview{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:none}#video.show,#canvasPreview.show{display:block}
+.view-placeholder{text-align:center;z-index:1;padding:22px}.view-placeholder .big{font-size:42px}.view-placeholder strong{display:block;margin:9px 0}.view-placeholder small{color:#aeb4a8;line-height:1.6;display:block}
+.cam-top{position:absolute;z-index:2;top:13px;left:14px;right:14px;display:flex;justify-content:space-between;font-size:11px;color:white;text-shadow:0 1px 4px #000}
+.livepill{background:#e25f4b;padding:5px 8px;border-radius:20px;font-weight:800}.camera-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 20px}
+.control-label{font-size:11px;color:var(--muted);display:block;margin-bottom:7px}.select{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--ink);max-width:100%}
+.zoom-row{display:flex;gap:7px}.zoom-btn{background:var(--button);color:var(--buttonText);border-radius:12px;padding:10px 12px;font-size:12px;font-weight:800}.zoom-btn.selected{background:#345b91;color:white;outline:2px solid #91afd9;outline-offset:1px}
+.shutter-row{display:flex;align-items:center;justify-content:center;gap:18px;margin:14px 0 8px}.shutter{width:70px;height:70px;border-radius:50%;background:var(--button);color:white;border:6px solid #b8cce8;box-shadow:0 0 0 2px var(--deep);font-size:24px}.mini-action{background:var(--button);color:var(--buttonText);border-radius:13px;width:45px;height:45px;font-size:18px}
+.notice{background:#f2f0e8;border-radius:13px;padding:12px 13px;font-size:12px;color:#676b5e;line-height:1.6}
+.gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.photo-card{border:1px solid var(--line);border-radius:15px;overflow:hidden;background:var(--card)}.photo-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#ddd}.photo-meta{padding:10px;font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:9px}.photo-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.photo-actions a,.photo-actions button{display:flex;align-items:center;justify-content:center;min-height:38px;border-radius:10px;font-size:12px;font-weight:800;text-decoration:none}.download-btn{background:var(--soft);color:var(--ink);border:1px solid var(--line)}.delete{background:#fff0ed;color:#a54235;border:1px solid #f1c9c2}.cloud-btn{background:var(--button);color:white;padding:12px;border-radius:12px;font-weight:800;width:100%;margin:4px 0 12px}.cloud-status{font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0 14px;padding:12px;background:var(--soft);border-radius:12px}
+.empty{padding:35px 12px;text-align:center;border:1px dashed #d9d4c7;border-radius:18px;color:var(--muted);margin-top:18px}.empty .big{font-size:30px;margin-bottom:8px}
+.settings-card{border:1px solid var(--line);border-radius:17px;padding:16px;margin:14px 0}.setting-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.setting-row:last-child{border:0}.setting-row b{font-size:13px}.setting-row small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.switch{appearance:none;width:42px;height:25px;border-radius:20px;background:#d5d3ca;position:relative;flex-shrink:0}.switch:after{content:"";width:19px;height:19px;border-radius:50%;position:absolute;left:3px;top:3px;background:white;transition:left .15s}.switch:checked{background:var(--button)}.switch:checked:after{left:20px}
+.bottomnav{position:fixed;z-index:10;bottom:0;left:50%;transform:translateX(-50%);width:min(460px,100%);padding:10px 15px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb, var(--paper) 93%, transparent);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.navbtn{background:transparent;color:#929488;border-radius:12px;padding:7px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px}.navbtn span:first-child{font-size:19px}.navbtn.active{color:white;background:var(--button);font-weight:850}
+.toast{position:fixed;z-index:20;bottom:94px;left:50%;transform:translateX(-50%);background:var(--button);color:white;padding:11px 16px;border-radius:12px;font-size:12px;display:none;max-width:90%;text-align:center}.toast.show{display:block}
+@media(min-width:700px){body{padding:22px 0}.app{border-radius:24px;overflow:hidden;min-height:calc(100dvh - 44px)}.bottomnav{bottom:22px;border-radius:0 0 24px 24px}.toast{bottom:110px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">YUNN <span style="color:#94b64c">/</span> CAMERA LAB</div>
+    <div class="status"><span class="dot"></span> 專題展示版</div>
+  </header>
+
+  <main>
+    <section class="page active" id="home">
+      <div class="eyebrow">YUNN CAMERA PRO · MANUAL CONTROL</div>
+      <h1>把每個瞬間，<br>好好收藏。</h1>
+      <p>簡易式數位相機｜手機版操作介面展示</p>
+      <div class="hero">
+        <div class="eyebrow">DESIGNED FOR YOUR MOMENTS</div>
+        <div class="camera-art"><span class="camera-label">YUNN EDITION</span></div>
+        <h2>簡約設計・直覺操作</h2>
+        <p>倒數拍攝、倍率切換、照片預覽，一頁完成。</p>
+      </div>
+      <button class="primary" onclick="showPage('camera')">開始使用相機 <span>↗</span></button>
+      <div class="section-head"><h2>功能一覽</h2><span class="small">FEATURES</span></div>
+      <div class="feature-grid">
+        <div class="feature"><div class="emoji">◉</div><b>拍攝預覽</b><span>可嘗試啟用手機鏡頭，或使用展示模式。</span></div>
+        <div class="feature"><div class="emoji">◷</div><b>倒數計時</b><span>提供 10、15、20 秒倒數設定。</span></div>
+        <div class="feature"><div class="emoji">⌕</div><b>倍率選擇</b><span>模擬 0.5×、1×、2× 拍攝倍率。</span></div>
+        <div class="feature"><div class="emoji">▦</div><b>照片管理</b><span>預覽、下載或刪除本次拍攝的照片。</span></div>
+      </div>
+    </section>
+
+    <section class="page" id="camera">
+      <div class="eyebrow">CAMERA</div><h1>準備好拍照了嗎？</h1><p>允許使用相機後可顯示即時畫面；也可以直接體驗展示模式。</p>
+      <div class="camera-window" id="cameraWindow">
+        <video id="video" autoplay playsinline muted></video>
+        <img id="canvasPreview" alt="拍攝預覽">
+        <div class="view-placeholder" id="placeholder"><div class="big">◎</div><strong>相機預覽區</strong><small>按下「啟用手機鏡頭」可嘗試開啟相機<br>不方便授權也能使用展示模式</small></div>
+        <div class="cam-top"><span id="camMode">DEMO MODE</span><span class="livepill">● REC</span></div>
+      </div>
+      <button class="secondary" style="width:100%" id="cameraToggle" onclick="toggleCamera()">啟用手機鏡頭</button>
+      <button class="secondary" style="width:100%;margin-top:8px" id="cameraSwitch" onclick="switchCamera()" disabled>切換前／後置鏡頭（先啟用相機）</button>
+      <div class="camera-controls">
+        <div><span class="control-label">倒數計時</span><select class="select" id="timer"><option value="0">立即拍攝</option><option value="10">10 秒</option><option value="15" selected>15 秒</option><option value="20">20 秒</option></select></div>
+        <div><span class="control-label">拍攝倍率</span><div class="zoom-row"><button class="zoom-btn" data-zoom="0.5" onclick="setZoom(0.5)">0.5×</button><button class="zoom-btn selected" data-zoom="1" onclick="setZoom(1)">1×</button><button class="zoom-btn" data-zoom="2" onclick="setZoom(2)">2×</button></div></div>
+      </div>
+      <div class="settings-card" style="margin-top:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <div><b>PRO 專業模式</b><small style="display:block;color:var(--muted);font-size:11px;margin-top:4px">能控制的參數會嘗試套用到相機；其他項目以預覽／成片效果呈現。</small></div>
+          <input class="switch" type="checkbox" id="proSwitch" onchange="toggleProMode(this.checked)" aria-label="開啟專業模式">
+        </div>
+        <div id="proPanel" style="display:none;margin-top:12px">
+          <div class="setting-row"><div><b>ISO 感光度</b><small id="isoStatus">自動／效果模擬</small></div><select class="select" id="proISO" onchange="applyProSettings()"><option value="auto">Auto</option><option value="100">100</option><option value="200">200</option><option value="400">400</option><option value="800">800</option><option value="1600">1600</option></select></div>
+          <div style="padding:12px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between;gap:10px"><b style="font-size:13px">快門速度</b><span class="small" id="shutterValue">自動</span></div><select class="select" id="proShutter" style="width:100%;margin-top:8px" onchange="applyProSettings()"><option value="auto">Auto</option><option value="1000">1/1000 秒</option><option value="500">1/500 秒</option><option value="250">1/250 秒</option><option value="125">1/125 秒</option><option value="60">1/60 秒</option><option value="30">1/30 秒</option></select></div>
+          <div class="setting-row"><div><b>白平衡</b><small id="wbStatus">色溫效果</small></div><select class="select" id="proWB" onchange="applyProSettings()"><option value="auto">自動</option><option value="daylight">日光</option><option value="cloudy">陰天</option><option value="warm">暖光</option><option value="cool">冷光</option></select></div>
+          <div class="setting-row"><div><b>對焦</b><small id="focusStatus">自動／裝置支援時手動</small></div><select class="select" id="proFocus" onchange="applyProSettings()"><option value="auto">自動對焦</option><option value="near">近物</option><option value="far">遠景</option></select></div>
+          <div style="padding:12px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between"><b style="font-size:13px">曝光補償</b><span id="evValue" class="small">0 EV</span></div><input id="proEV" type="range" min="-2" max="2" step="0.5" value="0" style="width:100%;margin-top:10px" oninput="updateProLabels()" onchange="applyProSettings()"></div>
+          <div class="setting-row"><div><b>色彩風格</b><small>效果會套用至預覽及拍攝照片</small></div><select class="select" id="proFilter" onchange="applyProSettings()"><option value="normal">原色</option><option value="vivid">鮮明</option><option value="warm">暖色</option><option value="cool">冷色</option><option value="mono">黑白</option><option value="vintage">復古</option></select></div>
+          <button class="secondary" style="width:100%;margin-top:12px" onclick="resetProSettings()">重設專業參數</button>
+          <p id="proNotice" style="font-size:11px;margin:10px 0 0">啟用相機後，網站會檢查裝置支援的控制項；不支援的項目仍會提供視覺效果。</p>
+        </div>
+      </div>
+      <div class="shutter-row">
+        <button class="mini-action" onclick="showPage('gallery')" aria-label="開啟相簿">▦</button>
+        <button class="shutter" onclick="takePhoto()" aria-label="拍照">●</button>
+        <button class="mini-action" onclick="resetCamera()" aria-label="重設">↺</button>
+      </div>
+      <div class="notice" id="cameraNote">展示模式：按下快門會產生一張示範照片，方便展示網站操作流程。</div>
+    </section>
+
+    <section class="page" id="gallery">
+      <div class="eyebrow">MY GALLERY</div><h1>拍攝紀錄</h1><p>本次瀏覽期間拍攝的照片會顯示在這裡。可點擊下載保存到裝置。</p>
+      <div class="settings-card" style="margin:16px 0"><h2 style="font-size:16px">☁️ Google 雲端同步</h2><p style="margin:6px 0 10px;font-size:12px">登入 Google 後，可選擇將照片同步到自己的 Google Drive「Yunn 拍貼」資料夾。</p><button class="cloud-btn" id="googleLoginBtn" onclick="handleGoogleLogin()">使用 Google 帳號登入</button><div id="cloudStatus" class="cloud-status">尚未登入。照片目前只保存在這個瀏覽器中。</div><button class="secondary" style="width:100%" onclick="askCloudSyncAll()">同步照片到雲端</button></div><div class="section-head"><h2>我的照片</h2><span class="small" id="photoCount">0 張</span></div>
+      <div id="galleryGrid" class="gallery-grid"></div>
+      <div id="galleryEmpty" class="empty"><div class="big">▧</div><b>目前還沒有照片</b><p style="margin:8px 0 0">前往相機頁面，按下快門開始拍攝。</p><button class="secondary" style="margin-top:15px" onclick="showPage('camera')">前往拍攝</button></div>
+    </section>
+
+    <section class="page" id="settings">
+      <div class="eyebrow">PREFERENCES</div><h1>拍攝設定</h1><p>這些設定用來展示專題規劃中的操作選項。</p>
+      <div class="settings-card">
+        <div class="setting-row"><div><b>深色模式</b><small>切換深色介面，方便夜間使用</small></div><input class="switch" type="checkbox" id="darkSwitch" onchange="toggleDarkMode(this.checked)"></div>
+        <div class="setting-row"><div><b>拍攝提示音</b><small>拍攝完成時顯示提示</small></div><input class="switch" type="checkbox" id="soundSwitch" checked></div>
+        <div class="setting-row"><div><b>倒數時顯示提示</b><small>開始倒數時顯示剩餘秒數</small></div><input class="switch" type="checkbox" id="countSwitch" checked></div>
+        <div class="setting-row"><div><b>預設倒數秒數</b><small>進入相機時使用的倒數時間</small></div><select class="select" id="defaultTimer"><option value="10">10 秒</option><option value="15" selected>15 秒</option><option value="20">20 秒</option></select></div>
+      </div>
+      <div class="settings-card">
+        <h2 style="font-size:16px">關於本專題</h2>
+        <p style="margin:8px 0 0">本網站是獨立的 Yunn Camera PRO 專業相機網頁。提供相機預覽、前後鏡頭切換、倒數拍攝、倍率選擇、專業參數與照片管理。相機硬體控制項目會依裝置及瀏覽器支援情況而定；照片保存在目前裝置的瀏覽器中，不會自動上傳到伺服器。</p>
+      </div>
+      <button class="primary" onclick="applySettings()">套用設定</button>
+    </section>
+  </main>
+  <nav class="bottomnav" aria-label="主要導覽">
+    <button class="navbtn active" data-page="home" onclick="showPage('home')"><span>⌂</span><span>首頁</span></button>
+    <button class="navbtn" data-page="camera" onclick="showPage('camera')"><span>◎</span><span>相機</span></button>
+    <button class="navbtn" data-page="gallery" onclick="showPage('gallery')"><span>▦</span><span>相簿</span></button>
+    <button class="navbtn" data-page="settings" onclick="showPage('settings')"><span>⚙</span><span>設定</span></button>
+  </nav>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const pages = ['home','camera','gallery','settings'];
+let stream = null, zoom = 1, photos = JSON.parse(localStorage.getItem('yunnCameraProPhotos') || '[]'), countdownHandle = null, facingMode = 'environment';
+function toggleDarkMode(enabled){document.body.classList.toggle('dark',enabled);document.querySelector('meta[name="theme-color"]').content=enabled?'#0a1220':'#102a56';toast(enabled?'已切換深色模式':'已切換淺色模式');}
+function showPage(name){
+  pages.forEach(p=>document.getElementById(p).classList.toggle('active',p===name));
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+  if(name==='gallery') renderGallery();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+let toastHandle;
+function toast(message){
+  const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');
+  clearTimeout(toastHandle);toastHandle=setTimeout(()=>el.classList.remove('show'),2600);
+}
+async function toggleCamera(){
+  if(stream){stopCamera();return}
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    toast('此瀏覽環境無法啟用相機，請使用 HTTPS 網址。');return;
+  }
+  facingMode='environment';
+  await startCamera(facingMode);
+}
+async function startCamera(mode){
+  try{
+    const newStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:mode}},audio:false});
+    // 先取得新鏡頭，再關閉舊串流，避免切換失敗時預覽直接消失。
+    if(stream)stream.getTracks().forEach(t=>t.stop());
+    stream=newStream;facingMode=mode;
+    const video=document.getElementById('video');video.srcObject=stream;video.classList.add('show');
+    document.getElementById('placeholder').style.display='none';
+    document.getElementById('canvasPreview').classList.remove('show');
+    document.getElementById('camMode').textContent=mode==='user'?'FRONT CAMERA':'REAR CAMERA';
+    document.getElementById('cameraToggle').textContent='關閉手機鏡頭';
+    const switchBtn=document.getElementById('cameraSwitch');switchBtn.disabled=false;
+    switchBtn.textContent=mode==='user'?'切換至後置鏡頭':'切換至前置鏡頭';
+    document.getElementById('cameraNote').textContent=mode==='user'?'前置鏡頭已啟用。自拍預覽會以鏡像方式顯示。':'後置鏡頭已啟用。按下快門會擷取當前畫面。';
+    applyZoom();if(proEnabled)applyProSettings();toast(mode==='user'?'已切換至前置鏡頭':'後置鏡頭已啟用');
+  }catch(e){
+    toast('無法開啟鏡頭，請確認瀏覽器相機權限，或繼續使用展示模式。');
+  }
+}
+async function switchCamera(){
+  if(!stream){toast('請先啟用手機鏡頭');return}
+  const nextMode=facingMode==='environment'?'user':'environment';
+  await startCamera(nextMode);
+}
+function stopCamera(){
+  if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;facingMode='environment';
+  const video=document.getElementById('video');video.srcObject=null;video.classList.remove('show');video.style.transform='';
+  document.getElementById('placeholder').style.display='block';
+  document.getElementById('camMode').textContent='DEMO MODE';
+  document.getElementById('cameraToggle').textContent='啟用手機鏡頭';
+  const switchBtn=document.getElementById('cameraSwitch');switchBtn.disabled=true;switchBtn.textContent='切換前／後置鏡頭（先啟用相機）';
+  document.getElementById('cameraNote').textContent='展示模式：按下快門會產生一張示範照片，方便展示網站操作流程。';
+}
+function setZoom(value){
+  zoom=value;document.querySelectorAll('.zoom-btn').forEach(b=>b.classList.toggle('selected',Number(b.dataset.zoom)===value));
+  applyZoom();toast('已選擇 '+value+'× 倍率（介面展示）');
+}
+function applyZoom(){if(stream){const mirror=facingMode==='user'?' scaleX(-1)':'';document.getElementById('video').style.transform=`scale(${Math.min(zoom,3)})${mirror}`}}
+function resetCamera(){
+  document.getElementById('timer').value='0';setZoom(1);
+  document.getElementById('canvasPreview').classList.remove('show');
+  if(!stream)document.getElementById('placeholder').style.display='block';
+  toast('拍攝設定已重設');
+}
+function makeDemoPhoto(){
+  const c=document.createElement('canvas');c.width=900;c.height=1100;const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,900,1100);g.addColorStop(0,'#b8c7a0');g.addColorStop(.55,'#e5c7a5');g.addColorStop(1,'#5e6d57');x.fillStyle=g;x.fillRect(0,0,900,1100);
+  x.fillStyle='#e9e5d8';x.beginPath();x.arc(680,230,105,0,Math.PI*2);x.fill();
+  for(let i=0;i<7;i++){x.fillStyle=['#68785d','#7f8c6d','#a5ad83'][i%3];x.beginPath();x.ellipse(120+i*120,640+(i%3)*60,130,300,(-.2+i*.05),0,Math.PI*2);x.fill()}
+  x.fillStyle='#f7f2e7';x.font='bold 44px sans-serif';x.fillText('YUNN CAMERA',52,1000);
+  x.font='26px sans-serif';x.fillText(new Date().toLocaleString('zh-TW'),52,1045);return c.toDataURL('image/jpeg',.9);
+}
+function capturePhoto(){
+  let src;
+  if(stream){
+    const video=document.getElementById('video');const c=document.createElement('canvas');
+    c.width=video.videoWidth||900;c.height=video.videoHeight||1100;
+    const ctx=c.getContext('2d');if(proEnabled)ctx.filter=getProFilter();ctx.save();ctx.translate(c.width/2,c.height/2);ctx.scale(facingMode==='user'?-zoom:zoom,zoom);ctx.drawImage(video,-c.width/2,-c.height/2,c.width,c.height);ctx.restore();src=c.toDataURL('image/jpeg',.92);
+  }else src=makeDemoPhoto();
+  photos.unshift({src,time:new Date().toLocaleString('zh-TW'),zoom});saveLocalPhotos();
+  document.getElementById('canvasPreview').src=src;document.getElementById('canvasPreview').classList.add('show');
+  document.getElementById('placeholder').style.display='none';renderGallery();toast('拍攝完成！照片已加入相簿');
+}
+function takePhoto(){
+  if(countdownHandle){clearInterval(countdownHandle);countdownHandle=null}
+  let seconds=Number(document.getElementById('timer').value);
+  if(seconds<=0){capturePhoto();return}
+  const note=document.getElementById('cameraNote');
+  let left=seconds;note.textContent='倒數拍攝中：'+left+' 秒後拍照，請保持畫面穩定。';toast('倒數開始：'+left+' 秒');
+  countdownHandle=setInterval(()=>{
+    left--;
+    if(left>0){note.textContent='倒數拍攝中：'+left+' 秒後拍照，請保持畫面穩定。';if(document.getElementById('countSwitch').checked)toast('還有 '+left+' 秒');}
+    else{clearInterval(countdownHandle);countdownHandle=null;capturePhoto();note.textContent='拍攝完成。可以繼續拍照，或前往相簿查看。';}
+  },1000);
+}
+function renderGallery(){
+  const grid=document.getElementById('galleryGrid'),empty=document.getElementById('galleryEmpty');
+  document.getElementById('photoCount').textContent=photos.length+' 張';
+  grid.innerHTML='';empty.style.display=photos.length?'none':'block';
+  photos.forEach((p,i)=>{
+    const card=document.createElement('article');card.className='photo-card';
+    const img=document.createElement('img');img.src=p.src;img.alt='拍攝照片 '+(i+1);
+    const meta=document.createElement('div');meta.className='photo-meta';
+    const label=document.createElement('span');label.textContent=p.zoom+'× · '+p.time;
+    const actions=document.createElement('div');actions.className='photo-actions';
+    const dl=document.createElement('a');dl.className='download-btn';dl.href=p.src;dl.download='yunn-camera-'+(i+1)+'.jpg';dl.textContent='下載照片';
+    const del=document.createElement('button');del.className='delete';del.textContent='刪除照片';del.onclick=()=>{if(confirm('確定要刪除這張照片嗎？')){photos.splice(i,1);saveLocalPhotos();renderGallery();toast('照片已刪除')}};
+    actions.append(dl,del);meta.append(label,actions);card.append(img,meta);grid.append(card);
+  });
+}
+let proEnabled=false;
+function toggleProMode(enabled){
+  proEnabled=enabled;document.getElementById('proPanel').style.display=enabled?'block':'none';
+  applyProSettings();toast(enabled?'已開啟 PRO 專業模式':'已切回自動模式');
+}
+function updateProLabels(){
+  document.getElementById('evValue').textContent=Number(document.getElementById('proEV').value).toFixed(1)+' EV';
+  const v=document.getElementById('proShutter').value;
+  document.getElementById('shutterValue').textContent=v==='auto'?'自動':'1/'+v+' 秒';
+}
+function getProFilter(){
+  if(!proEnabled)return 'none';
+  const f=document.getElementById('proFilter').value, wb=document.getElementById('proWB').value;
+  let parts=[];
+  const ev=Number(document.getElementById('proEV').value);
+  parts.push('brightness('+Math.pow(2,ev).toFixed(2)+')');
+  if(f==='vivid')parts.push('saturate(1.45) contrast(1.08)');
+  if(f==='warm'||wb==='warm')parts.push('sepia(0.18) saturate(1.12)');
+  if(f==='cool'||wb==='cool')parts.push('hue-rotate(10deg) saturate(0.92)');
+  if(f==='mono')parts.push('grayscale(1)');
+  if(f==='vintage')parts.push('sepia(0.35) contrast(0.9) saturate(0.8)');
+  if(wb==='daylight')parts.push('saturate(1.05)');
+  if(wb==='cloudy')parts.push('sepia(0.08) saturate(1.08)');
+  return parts.join(' ');
+}
+async function applyProSettings(){
+  updateProLabels();
+  const video=document.getElementById('video');
+  video.style.filter=getProFilter();
+  const c=document.getElementById('proNotice'), track=stream&&stream.getVideoTracks()[0];
+  let applied=[];
+  if(track && proEnabled && track.getCapabilities && track.applyConstraints){
+    try{
+      const caps=track.getCapabilities(), advanced={};
+      const iso=document.getElementById('proISO').value;
+      if(iso!=='auto' && caps.iso){advanced.iso=Number(iso)}
+      const shutter=document.getElementById('proShutter').value;
+      if(shutter!=='auto' && caps.exposureTime){advanced.exposureTime=Math.max(caps.exposureTime.min,Math.min(caps.exposureTime.max,1000000/Number(shutter)))}
+      const ev=Number(document.getElementById('proEV').value);
+      if(caps.exposureCompensation){advanced.exposureCompensation=Math.max(caps.exposureCompensation.min,Math.min(caps.exposureCompensation.max,ev))}
+      const wb=document.getElementById('proWB').value;
+      if(wb!=='auto' && caps.whiteBalanceMode && caps.whiteBalanceMode.includes('manual'))advanced.whiteBalanceMode='manual';
+      const focus=document.getElementById('proFocus').value;
+      if(focus!=='auto' && caps.focusMode && caps.focusMode.includes('manual')){
+        advanced.focusMode='manual';
+        if(caps.focusDistance)advanced.focusDistance=focus==='near'?caps.focusDistance.min:caps.focusDistance.max;
+      }else if(focus==='auto' && caps.focusMode && caps.focusMode.includes('continuous'))advanced.focusMode='continuous';
+      if(Object.keys(advanced).length){await track.applyConstraints({advanced:[advanced]});applied=Object.keys(advanced)}
+    }catch(e){/* unsupported controls fall back to visual effects */}
+  }
+  const supported=stream&&stream.getVideoTracks()[0]&&stream.getVideoTracks()[0].getCapabilities;
+  document.getElementById('isoStatus').textContent=applied.includes('iso')?'已嘗試套用硬體控制':'裝置不支援時以效果呈現';
+  document.getElementById('wbStatus').textContent=applied.includes('whiteBalanceMode')?'已嘗試套用相機白平衡':'以色溫效果呈現';
+  document.getElementById('focusStatus').textContent=applied.includes('focusMode')?'已嘗試套用相機對焦':'裝置不支援時維持自動';
+  if(c)c.textContent=stream?(applied.length?'已嘗試套用硬體參數：'+applied.join('、')+'。其他設定以效果呈現。':'目前相機／瀏覽器未提供可確認的手動控制；曝光與色彩效果仍可使用。'):'先啟用相機以檢查硬體支援。';
+}
+function resetProSettings(){
+  document.getElementById('proISO').value='auto';document.getElementById('proShutter').value='auto';
+  document.getElementById('proWB').value='auto';document.getElementById('proFocus').value='auto';
+  document.getElementById('proEV').value='0';document.getElementById('proFilter').value='normal';
+  applyProSettings();toast('專業參數已重設');
+}
+function applySettings(){
+  document.getElementById('timer').value=document.getElementById('defaultTimer').value;
+  toast('設定已套用到相機頁面');
+}
+document.getElementById('defaultTimer').addEventListener('change',e=>document.getElementById('timer').value=e.target.value);
+</script>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+// Google Drive sync setup: add your own OAuth Web Client ID from Google Cloud Console.
+const GOOGLE_CLIENT_ID = '722832758505-unik7ejfug0u46tdj29mi2g1iehb3sik.apps.googleusercontent.com';
+const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+let googleTokenClient=null, driveAccessToken=null, driveFolderId=null;
+function saveLocalPhotos(){try{localStorage.setItem('yunnCameraProPhotos',JSON.stringify(photos));}catch(e){toast('本機儲存空間不足，請先下載部分照片');}}
+function setCloudStatus(msg){const el=document.getElementById('cloudStatus');if(el)el.textContent=msg;}
+function handleGoogleLogin(){
+ if(GOOGLE_CLIENT_ID.startsWith('YOUR_')){alert('Google 登入尚需設定 OAuth 用戶端 ID。請先建立 Google Cloud 專案、啟用 Google Drive API，並將網站網址加入授權來源。');setCloudStatus('尚未完成 Google OAuth 設定。完成設定後即可登入及同步。');return;}
+ if(!window.google?.accounts?.oauth2){alert('Google 登入元件尚未載入，請確認網路連線後重試。');return;}
+ googleTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:async(resp)=>{if(resp.error){setCloudStatus('登入失敗：'+resp.error);return;}driveAccessToken=resp.access_token;document.getElementById('googleLoginBtn').textContent='已登入 Google（重新授權）';setCloudStatus('Google 已登入。按「同步照片到雲端」即可建立／使用「Yunn 拍貼」資料夾。');}});googleTokenClient.requestAccessToken();
+}
+async function driveRequest(url,opts={}){const r=await fetch(url,{...opts,headers:{Authorization:'Bearer '+driveAccessToken,...(opts.headers||{})}});if(!r.ok)throw new Error(await r.text());return r.status===204?null:r.json();}
+async function getOrCreateDriveFolder(){if(driveFolderId)return driveFolderId;const q=encodeURIComponent("name='Yunn 拍貼' and mimeType='application/vnd.google-apps.folder' and trashed=false");const found=await driveRequest('https://www.googleapis.com/drive/v3/files?q='+q+'&fields=files(id,name)');if(found.files?.length){driveFolderId=found.files[0].id;return driveFolderId;}const folder=await driveRequest('https://www.googleapis.com/drive/v3/files?fields=id',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'Yunn 拍貼',mimeType:'application/vnd.google-apps.folder'})});driveFolderId=folder.id;return driveFolderId;}
+async function uploadPhotoToDrive(photo,index,folderId){const blob=await (await fetch(photo.src)).blob();const metadata={name:'Yunn-Camera-'+new Date().toISOString().replace(/[:.]/g,'-')+'-'+(index+1)+'.jpg',mimeType:'image/jpeg',parents:[folderId]};const boundary='yunn_camera_boundary';const body=new Blob(['--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify(metadata)+'\r\n--'+boundary+'\r\nContent-Type: image/jpeg\r\n\r\n',blob,'\r\n--'+boundary+'--'],{type:'multipart/related; boundary='+boundary});await driveRequest('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name',{method:'POST',headers:{'Content-Type':'multipart/related; boundary='+boundary},body});}
+async function askCloudSyncAll(){if(!driveAccessToken){alert('請先使用 Google 帳號登入。');return;}if(!photos.length){alert('目前沒有照片可以同步。');return;}if(!confirm('要將 '+photos.length+' 張照片同步到你的 Google Drive「Yunn 拍貼」資料夾嗎？'))return;try{setCloudStatus('正在準備雲端資料夾…');const folder=await getOrCreateDriveFolder();for(let i=0;i<photos.length;i++){setCloudStatus('正在同步照片 '+(i+1)+' / '+photos.length+'…');await uploadPhotoToDrive(photos[i],i,folder);}setCloudStatus('同步完成！照片已上傳到 Google Drive 的「Yunn 拍貼」資料夾。');toast('雲端同步完成');}catch(e){console.error(e);setCloudStatus('同步失敗。請確認已啟用 Google Drive API、授權正確且網路正常。');alert('同步失敗，請檢查 Google Cloud OAuth／Drive API 設定後再試。');}}
+</script>
+
+</body>
+</html>
